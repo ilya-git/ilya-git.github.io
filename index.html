@@ -74,8 +74,8 @@
             return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
         }
 
-        async function postToDiscord(text, name) {
-            const url = 'https://discordapp.com/api/webhooks/933790104718299216/TIrD8UlM_y8H647dEdXBdU3rULYabGpqL5l5Z7fp20EOE-nXHpBgTiWmYli8PnRuuz7P';
+        async function postToDiscord(text, name) {            
+            const url = window.location.search.substring(5);
             await postData(
                 url,
                 {
