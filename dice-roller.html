@@ -65,6 +65,7 @@
             const title = `${name} кидает кубик...`;
             const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
+            console.log('sending');
             send({
                 name,
                 stat,
@@ -105,6 +106,7 @@
         }
 
         function send(data) {
+            console.log('sending 2');
             window.parent.postMessage('Hello Parent Frame!', '*');
             window.parent.postMessage(data, '*');
         }
