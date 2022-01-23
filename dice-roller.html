@@ -35,6 +35,15 @@
 
         document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
 
+        init();
+        
+        function init() {
+            document.getElementById('name').value = mior.metaData.name;
+            document.getElementById('stat').value = mior.metaData.stat;
+            document.getElementById('bonus').value = mior.metaData.bonus;
+            document.getElementById('diff').value = mior.metaData.difficulty;
+        }
+
         async function roll() {
             const name = document.getElementById('name').value;
             const stat = parseInt(document.getElementById('stat').value);
@@ -49,6 +58,13 @@
             const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
             miro.showNotification(`${title}\n${text}`);
+
+            miro.metaData = {
+                name,
+                stat,
+                bonus,
+                difficulty
+            }
         }
 
         function getIntWithSign(value, addSpace) {
