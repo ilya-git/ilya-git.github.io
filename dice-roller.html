@@ -35,22 +35,22 @@
 
         document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
 
-        init();
+        // init();
         
-        function init() {
-            console.log(parent);
-            // console.log(window);
-            // console.log(miro);
-            // console.log(window.parent);
-            // console.log(window.miro);
-            // console.log(window.parent.miro);
-            if (parent.miro.metaData) {
-                document.getElementById('name').value = miro.metaData.name;
-                document.getElementById('stat').value = miro.metaData.stat;
-                document.getElementById('bonus').value = miro.metaData.bonus;
-                document.getElementById('diff').value = miro.metaData.difficulty;
-            }            
-        }
+        // function init() {
+        //     console.log(parent);
+        //     // console.log(window);
+        //     // console.log(miro);
+        //     // console.log(window.parent);
+        //     // console.log(window.miro);
+        //     // console.log(window.parent.miro);
+        //     if (parent.miro.metaData) {
+        //         document.getElementById('name').value = miro.metaData.name;
+        //         document.getElementById('stat').value = miro.metaData.stat;
+        //         document.getElementById('bonus').value = miro.metaData.bonus;
+        //         document.getElementById('diff').value = miro.metaData.difficulty;
+        //     }            
+        // }
 
         async function roll() {
             const name = document.getElementById('name').value;
@@ -65,14 +65,21 @@
             const title = `${name} кидает кубик...`;
             const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-            miro.showNotification(`${title}\n${text}`);
-
-            miro.metaData = {
+            send({
                 name,
                 stat,
                 bonus,
                 difficulty
-            }
+            });
+
+            // miro.showNotification(`${title}\n${text}`);
+
+            // miro.metaData = {
+            //     name,
+            //     stat,
+            //     bonus,
+            //     difficulty
+            // }
         }
 
         function getIntWithSign(value, addSpace) {
@@ -95,6 +102,11 @@
             min = Math.ceil(min);
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+        }
+
+        function send(data) {
+            window.parent.postMessage('Hello Parent Frame!', '*');
+            window.parent.postMessage(data, '*');
         }
 
     </script>
