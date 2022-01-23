@@ -34,7 +34,7 @@
     <script src="https://miro.com/app/static/sdk.1.1.js"></script>
     <script>
         miro.onReady(() => {
-            console.log("Initializing dice roller plugin version " + "6");
+            console.log("Initializing dice roller plugin version " + "7");
             miro.initialize({
                 extensionPoints: {
                     bottomBar: {
@@ -65,24 +65,34 @@
         window.addEventListener('message', receiveMessage, false);
         
         function receiveMessage(event) {
-            alert("got message: " + event.data);
-            miro.showNotification(`test`);
+            if (event.origin.startsWith("https://ilya-git")) {
+                console.log(event.data)
+                roll(event.data)
+            }
         }
 
-        async function roll() {
-            const name = document.getElementById('name').value;
-            const stat = parseInt(document.getElementById('stat').value);
-            const bonus = parseInt(document.getElementById('bonus').value);
-            const difficulty = parseInt(document.getElementById('diff').value);
+        async function roll(data) {
+            // const name = document.getElementById('name').value;
+            // const stat = parseInt(document.getElementById('stat').value);
+            // const bonus = parseInt(document.getElementById('bonus').value);
+            // const difficulty = parseInt(document.getElementById('diff').value);
+
+            name = data.name;
+            stat = data.stat;
+            bonus = data.bonus;
+            difficulty = data.difficulty;
 
             const target = stat + bonus + difficulty;
             const roll = getRandomInt(1, 11);
             const result = target - roll;
 
-            const title = `Кидает кубик...`;
+            const title = `${name} кидает кубик...`;
             const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-            await postToDiscord('```' + text + '```', name);
+            miro.showNotification(`test`);
+            miro.showNotification(`${title}\n${text}`);
+
+            //await postToDiscord('```' + text + '```', name);
             //await postToDiscord(text, name);
         }
 
