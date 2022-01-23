@@ -38,10 +38,12 @@
         init();
         
         function init() {
-            document.getElementById('name').value = mior.metaData.name;
-            document.getElementById('stat').value = mior.metaData.stat;
-            document.getElementById('bonus').value = mior.metaData.bonus;
-            document.getElementById('diff').value = mior.metaData.difficulty;
+            if (miro.metaData) {
+                document.getElementById('name').value = miro.metaData.name;
+                document.getElementById('stat').value = miro.metaData.stat;
+                document.getElementById('bonus').value = miro.metaData.bonus;
+                document.getElementById('diff').value = miro.metaData.difficulty;
+            }            
         }
 
         async function roll() {
