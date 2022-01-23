@@ -38,12 +38,13 @@
         init();
         
         function init() {
-            console.log(window);
-            console.log(miro);
-            console.log(window.parent);
-            console.log(window.miro);
-            console.log(window.parent.miro);
-            if (miro.metaData) {
+            console.log(parent);
+            // console.log(window);
+            // console.log(miro);
+            // console.log(window.parent);
+            // console.log(window.miro);
+            // console.log(window.parent.miro);
+            if (parent.miro.metaData) {
                 document.getElementById('name').value = miro.metaData.name;
                 document.getElementById('stat').value = miro.metaData.stat;
                 document.getElementById('bonus').value = miro.metaData.bonus;
