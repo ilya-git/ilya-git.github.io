@@ -1,4 +1,5 @@
 <html>
+    <script src="https://miro.com/app/static/sdk.1.1.js"></script>
     <label for="name">Имя персонажа:</label>
     <input id="name" name="name" value="Рольф Рольфсон">
     <table>
@@ -35,9 +36,11 @@
 
         document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
 
-        // init();
+         init();
         
-        // function init() {
+         function init() {
+             console.log("INIT");
+             console.log(miro)
         //     console.log(parent);
         //     // console.log(window);
         //     // console.log(miro);
@@ -50,7 +53,7 @@
         //         document.getElementById('bonus').value = miro.metaData.bonus;
         //         document.getElementById('diff').value = miro.metaData.difficulty;
         //     }            
-        // }
+         }
 
         async function roll() {
             const name = document.getElementById('name').value;
