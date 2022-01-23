@@ -1,4 +1,15 @@
 <html>
+    <script>
+        function receiveMessage(event) {
+            if (event.origin.startsWith("https://ilya-git")) {
+                console.log(event.data)
+                roll(event.data)
+            }
+            console.log(event);
+        }
+
+        window.addEventListener('message', receiveMessage, false);            
+    </script>
     <label for="name">Имя персонажа:</label>
     <input id="name" name="name" value="Рольф Рольфсон">
     <table>
@@ -34,7 +45,7 @@
     <script src="https://miro.com/app/static/sdk.1.1.js"></script>
     <script>
         miro.onReady(() => {
-            console.log("Initializing dice roller plugin version " + "11");
+            console.log("Initializing dice roller plugin version " + "12");
             miro.initialize({
                 extensionPoints: {
                     bottomBar: {
@@ -64,15 +75,6 @@
     <script>
 
         document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
-        window.addEventListener('message', receiveMessage, false);
-        
-        function receiveMessage(event) {
-            if (event.origin.startsWith("https://ilya-git")) {
-                console.log(event.data)
-                roll(event.data)
-            }
-            console.log(event);
-        }
 
         async function roll(data) {
             // const name = document.getElementById('name').value;
