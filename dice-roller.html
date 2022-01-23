@@ -39,20 +39,20 @@
          init();
         
          function init() {
-             console.log("INIT");
-             console.log(miro)
+             //console.log("INIT");
+             //console.log(miro)
         //     console.log(parent);
         //     // console.log(window);
         //     // console.log(miro);
         //     // console.log(window.parent);
         //     // console.log(window.miro);
         //     // console.log(window.parent.miro);
-        //     if (parent.miro.metaData) {
-        //         document.getElementById('name').value = miro.metaData.name;
-        //         document.getElementById('stat').value = miro.metaData.stat;
-        //         document.getElementById('bonus').value = miro.metaData.bonus;
-        //         document.getElementById('diff').value = miro.metaData.difficulty;
-        //     }            
+            if (miro.metaData) {
+                document.getElementById('name').value = miro.metaData.name;
+                document.getElementById('stat').value = miro.metaData.stat;
+                document.getElementById('bonus').value = miro.metaData.bonus;
+                document.getElementById('diff').value = miro.metaData.difficulty;
+            }            
          }
 
         async function roll() {
@@ -68,22 +68,15 @@
             const title = `${name} кидает кубик...`;
             const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-            console.log('sending');
-            send({
+            miro.showNotification(`test`);
+            miro.showNotification(`${title}\n${text}`);
+
+            miro.metaData = {
                 name,
                 stat,
                 bonus,
                 difficulty
-            });
-
-            // miro.showNotification(`${title}\n${text}`);
-
-            // miro.metaData = {
-            //     name,
-            //     stat,
-            //     bonus,
-            //     difficulty
-            // }
+            }
         }
 
         function getIntWithSign(value, addSpace) {
