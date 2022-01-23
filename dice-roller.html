@@ -45,10 +45,10 @@
             const roll = getRandomInt(1, 11);
             const result = target - roll;
 
-            const title = `Кидает кубик...`;
+            const title = `${name} кидает кубик...`;
             const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-            miro.showNotification('test');
+            miro.showNotification(`${title}\n${text}`);
         }
 
         function getIntWithSign(value, addSpace) {
