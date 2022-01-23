@@ -34,7 +34,7 @@
     <script src="https://miro.com/app/static/sdk.1.1.js"></script>
     <script>
         miro.onReady(() => {
-            console.log("Initializing dice roller plugin version " + "10");
+            console.log("Initializing dice roller plugin version " + "11");
             miro.initialize({
                 extensionPoints: {
                     bottomBar: {
@@ -71,6 +71,7 @@
                 console.log(event.data)
                 roll(event.data)
             }
+            console.log(event);
         }
 
         async function roll(data) {
