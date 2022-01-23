@@ -108,6 +108,9 @@
         function send(data) {
             console.log('sending 2');
             window.parent.postMessage('Hello Parent Frame!', '*');
+            window.parent.postMessage('Hello Parent Frame!', 'https://miro.com');
+            window.parent.parent.postMessage('Hello Parent Frame!', '*');
+            window.parent.parent.postMessage('Hello Parent Frame!', 'https://miro.com');
             window.parent.postMessage(data, '*');
         }
 
