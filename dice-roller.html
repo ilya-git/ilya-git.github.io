@@ -33,11 +33,15 @@
     </table>
 
     <script>
+        
+        init();
 
-        if (miro) {
-            var info = await miro.board.getInfo();
-            var userName = info.currentUserContext.user.name;
-            document.getElementById('name').value = userName;
+        async function init(){
+            if (miro) {
+                var info = await miro.board.getInfo();
+                var userName = info.currentUserContext.user.name;
+                document.getElementById('name').value = userName;
+            }
         }
         
         document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
