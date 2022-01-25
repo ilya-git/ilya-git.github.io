@@ -34,26 +34,13 @@
 
     <script>
 
-        document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
-
-         init();
+        if (miro) {
+            var info = await miro.board.getInfo();
+            var userName = info.currentUserContext.user.name;
+            document.getElementById('name').value = userName;
+        }
         
-         function init() {
-             //console.log("INIT");
-             //console.log(miro)
-        //     console.log(parent);
-        //     // console.log(window);
-        //     // console.log(miro);
-        //     // console.log(window.parent);
-        //     // console.log(window.miro);
-        //     // console.log(window.parent.miro);
-            if (miro.metaData) {
-                document.getElementById('name').value = miro.metaData.name;
-                document.getElementById('stat').value = miro.metaData.stat;
-                document.getElementById('bonus').value = miro.metaData.bonus;
-                document.getElementById('diff').value = miro.metaData.difficulty;
-            }            
-         }
+        document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
 
         async function roll() {
             const name = document.getElementById('name').value;
@@ -68,15 +55,7 @@
             const title = `${name} кидает кубик...`;
             const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-            miro.showNotification(`test`);
-            miro.showNotification(`${title}\n${text}`);
-
-            miro.metaData = {
-                name,
-                stat,
-                bonus,
-                difficulty
-            }
+            await postToDiscord('```' + title + '\n' + text + '```', name);
         }
 
         function getIntWithSign(value, addSpace) {
@@ -101,13 +80,36 @@
             return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
         }
 
-        function send(data) {
-            console.log('sending 2');
-            window.parent.postMessage('Hello Parent Frame!', '*');
-            window.parent.postMessage('Hello Parent Frame!', 'https://miro.com');
-            window.parent.parent.postMessage('Hello Parent Frame!', '*');
-            window.parent.parent.postMessage('Hello Parent Frame!', 'https://miro.com');
-            window.parent.postMessage(data, '*');
+        
+        async function postToDiscord(text, name) {
+            const url = window.location.search.substring(5);
+            await postData(
+                url,
+                {
+                    username: name ?? 'Рок',
+                    content: text
+                });
+        }
+
+        async function postData(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+
+            if (response.status == 200) {
+                return response.json(); // parses JSON response into native JavaScript objects
+            }
         }
 
     </script>
