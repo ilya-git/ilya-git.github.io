@@ -53,7 +53,15 @@
         }
     }
 
-    document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
+    document.onkeypress = (e) => { 
+        console.log(e)
+        if (e.key == 'Enter') roll();
+        if (e.key == 'r') roll();
+        if (e.key == 'c') rollRandomCharacter();
+        if (e.key == 'b') rollRandomBodyPart();
+        if (e.key == 'p') rollRandomBodyPart();
+    }
+    
 
     async function roll() {
         const name = document.getElementById('name').value;
