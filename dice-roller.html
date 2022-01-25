@@ -43,7 +43,7 @@
 <div id="randomBodyPart"></div>
 <script>
 
-    console.log("Dice roller plugin version " + "20");
+    console.log("--== Dice roller plugin version 21 ==--");
 
     miro.onReady(() => {
         console.log("Initializing dice roller plugin");
@@ -72,7 +72,7 @@
         const roll = getRandomInt(1, 11);
         const result = target - roll;
 
-        const title = `${name} кидает кубик...`;
+        const title = `Кидает кубик...`;
         const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
         await postToDiscord('```' + title + '\n' + text + '```', name);
