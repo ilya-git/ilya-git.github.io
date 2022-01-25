@@ -1,120 +1,146 @@
 <html>
-    <script src="https://miro.com/app/static/sdk.1.1.js"></script>
-    <label for="name">Имя персонажа:</label>
-    <input id="name" name="name" value="Рольф Рольфсон">
-    <table>
-        <tr>
-            <th>
-                <label for="stat">Стат:</label>
-            </th>
-            <th>
-                <label for="stat">Сложность:</label>
-            </th>
-            <th>
-                <label for="bonus">Бонус:</label>
-            </th>
-        </tr>
-        <tr>
-            <td>
-                <input type="number" id="stat" name="stat" value="5" min="1" max="10">
-                +
-            </td>
-            <td>
-                <input type="number" id="diff" name="diff" min="-10" value="0" max="10">
-                +
-            </td>
-            <td>
-                <input type="number" id="bonus" name="bonus" value="0" min="-10" max="10">
-            </td>
-            <td>
-                <button onclick="roll()">Кинуть кубик</button>
-            </td>
-        </tr>
-    </table>
+<script src="https://miro.com/app/static/sdk.1.1.js"></script>
+<label for="name">Имя персонажа:</label>
+<input id="name" name="name" value="Рольф Рольфсон">
+<table>
+    <tr>
+        <th>
+            <label for="stat">Стат:</label>
+        </th>
+        <th>
+            <label for="stat">Сложность:</label>
+        </th>
+        <th>
+            <label for="bonus">Бонус:</label>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <input type="number" id="stat" name="stat" value="5" min="1" max="10">
+            +
+        </td>
+        <td>
+            <input type="number" id="diff" name="diff" min="-10" value="0" max="10">
+            +
+        </td>
+        <td>
+            <input type="number" id="bonus" name="bonus" value="0" min="-10" max="10">
+        </td>
+        <td>
+            <button onclick="roll()">Кинуть кубик</button>
+        </td>
+    </tr>
+</table>
+</br>
+</br>
+</br>
+<button onclick="rollRandomCharacter()">Случайный персонаж</button>
+<div id="randomCharacter"></div>
+</br>
+</br>
+</br>
+<button onclick="rollRandomBodyPart()">Случайная часть тела</button>
+<div id="randomBodyPart"></div>
+<script>
 
-    <script>
-        
-        init();
+    init();
 
-        async function init(){
-            if (miro) {
-                var info = await miro.board.getInfo();
-                var userName = info.currentUserContext.user.name;
-                document.getElementById('name').value = userName;
-            }
+    async function init() {
+        if (miro.board) {
+            var info = await miro.board.getInfo();
+            var userName = info.currentUserContext.user.name;
+            document.getElementById('name').value = userName;
         }
-        
-        document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
+    }
 
-        async function roll() {
-            const name = document.getElementById('name').value;
-            const stat = parseInt(document.getElementById('stat').value);
-            const bonus = parseInt(document.getElementById('bonus').value);
-            const difficulty = parseInt(document.getElementById('diff').value);
+    document.onkeypress = (e) => { if (e.charCode == 13) roll(); };
 
-            const target = stat + bonus + difficulty;
-            const roll = getRandomInt(1, 11);
-            const result = target - roll;
+    async function roll() {
+        const name = document.getElementById('name').value;
+        const stat = parseInt(document.getElementById('stat').value);
+        const bonus = parseInt(document.getElementById('bonus').value);
+        const difficulty = parseInt(document.getElementById('diff').value);
 
-            const title = `${name} кидает кубик...`;
-            const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
+        const target = stat + bonus + difficulty;
+        const roll = getRandomInt(1, 11);
+        const result = target - roll;
 
-            await postToDiscord('```' + title + '\n' + text + '```', name);
+        const title = `${name} кидает кубик...`;
+        const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
+
+        await postToDiscord('```' + title + '\n' + text + '```', name);
+    }
+
+    function getIntWithSign(value, addSpace) {
+        const space = (addSpace ? ' ' : '');
+        if (value >= 0) {
+            return '+' + space + value;
         }
+        return '-' + space + Math.abs(value);
+    }
 
-        function getIntWithSign(value, addSpace) {
-            const space = (addSpace ? ' ' : '');
-            if (value >= 0) {
-                return '+' + space + value;
-            }
-            return '-' + space + Math.abs(value);
-        }
-
-        function getResultSmile(value) {
-            if (value >= 0) {
-                return '🎉'
-            }
-
-            return '😿'
-        }
-
-        function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-        }
-
-        
-        async function postToDiscord(text, name) {
-            const url = window.location.search.substring(5);
-            await postData(
-                url,
-                {
-                    username: name ?? 'Рок',
-                    content: text
-                });
+    function getResultSmile(value) {
+        if (value >= 0) {
+            return '🎉'
         }
 
-        async function postData(url = '', data = {}) {
-            // Default options are marked with *
-            const response = await fetch(url, {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                mode: 'cors', // no-cors, *cors, same-origin
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: 'same-origin', // include, *same-origin, omit
-                headers: {
-                    'Content-Type': 'application/json'
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                redirect: 'follow', // manual, *follow, error
-                referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify(data) // body data type must match "Content-Type" header
+        return '😿'
+    }
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+    }
+
+    function rollRandomCharacter() {
+        const characters = ["Витя", "Толя", "Катя", "Женя", "Вова"]
+        const value = choseRandomly(characters);
+        document.getElementById('randomCharacter').innerText = value;
+    }
+
+    function rollRandomBodyPart() {
+        const parts = ["Правая нога", "Левая нога", "Правая рука", "Левая ркуа", "Тело", "Голова"]
+        const value = choseRandomly(parts);
+        document.getElementById('randomBodyPart').innerText = value;
+    }
+
+    function choseRandomly(elements) {
+        result = getRandomInt(0, elements.length);
+        return elements[result];
+    }
+
+    async function postToDiscord(text, name) {
+        const url = window.location.search.substring(5);
+        await postData(
+            url,
+            {
+                username: name ?? 'Рок',
+                content: text
             });
+    }
 
-            if (response.status == 200) {
-                return response.json(); // parses JSON response into native JavaScript objects
-            }
+    async function postData(url = '', data = {}) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: 'same-origin', // include, *same-origin, omit
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            redirect: 'follow', // manual, *follow, error
+            referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+
+        if (response.status == 200) {
+            return response.json(); // parses JSON response into native JavaScript objects
         }
+    }
 
-    </script>
+</script>
+
 </html>
