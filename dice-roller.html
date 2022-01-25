@@ -7,28 +7,32 @@
 <script src="https://miro.com/app/static/sdk.1.1.js"></script>
 
 
-<div class="row p-2">
-    <div class="row p-3">
-        <label class="col-6" for="name">Имя персонажа:</label>
-        <input class="col-6" id="name" name="name" value="Рольф Рольфсон">
+
+    <div class="row p-1" >
+        <div class="col-5 p-1">
+            <label for="name">Имя персонажа:</label>
+        </div>
+        <div class="col-3 p-1">
+            <input id="name" name="name" value="Рольф Рольфсон">
+        </div>            
     </div>
-    <div class="row">
-        <div class="col-3">
+    <div class="row px-2">
+        <div class="col-3 p-1">
             <input type="number" id="stat" placeholder="Стат" class="form-control" required min="-10" max="10" value=5>
         </div>
-        <div class="col-3">
+        <div class="col-3 p-1">
             <input type="number" id="diff" placeholder="Сложность" class="form-control" required min="-10" max="10"
                 value=0>
         </div>
-        <div class="col-3">
+        <div class="col-3 p-1">
             <input type="number" id="bonus" placeholder="Бонус" class="form-control" required min="-10" max="10"
                 value=0>
         </div>
-        <button type="submit" class="btn btn-primary col-3" onclick="roll()">
-            <i class="fa fa-btn fa-plus"></i>
-        </button>
+        <div class="col-3 p-1">
+            <button type="submit" class="btn btn-primary">+</button>
+          </div>  
     </div>
-</div>
+
 
 <!-- 
 <div class="form-inline">
