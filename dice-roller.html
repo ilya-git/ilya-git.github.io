@@ -43,9 +43,9 @@
 <div id="randomBodyPart"></div>
 <script>
 
-    console.log("--== Dice roller plugin version 21 ==--");
+    console.log("--== Dice roller plugin version 22 ==--");
 
-    miro.onReady(() => {
+    miro.onReady(async () => {
         console.log("Initializing dice roller plugin");
         var info = await miro.board.getInfo();
         var userName = info.currentUserContext.user.name;
