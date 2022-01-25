@@ -43,15 +43,14 @@
 <div id="randomBodyPart"></div>
 <script>
 
-    init();
+    console.log("Dice roller plugin version " + "20");
 
-    async function init() {
-        if (miro.board) {
-            var info = await miro.board.getInfo();
-            var userName = info.currentUserContext.user.name;
-            document.getElementById('name').value = userName;
-        }
-    }
+    miro.onReady(() => {
+        console.log("Initializing dice roller plugin");
+        var info = await miro.board.getInfo();
+        var userName = info.currentUserContext.user.name;
+        document.getElementById('name').value = userName;
+    });
 
     document.onkeypress = (e) => { 
         console.log(e)
