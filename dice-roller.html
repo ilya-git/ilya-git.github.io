@@ -110,14 +110,16 @@
         document.getElementById('name').value = userName;
     });
 
+    var showRollNotification = true;
+
     document.onkeypress = (e) => {
         if (e.key == 'Enter') roll();
         if (e.key == 'r') roll();
         if (e.key == 'c') rollRandomCharacter();
         if (e.key == 'b') rollRandomBodyPart();
         if (e.key == 'p') rollRandomBodyPart();
+        if (e.key == 'n') showRollNotification = !showRollNotification;
     }
-
 
     async function roll() {
         const name = document.getElementById('name').value;
@@ -132,7 +134,11 @@
         const title = `Кидает кубик...`;
         const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-        await postToDiscord('```' + title + '\n' + text + '```', name);
+        const result = '```' + title + '\n' + text + '```';
+        if (showRollNotification){
+            showNotification(result);
+        }
+        await postToDiscord(result, name);
     }
 
     function getIntWithSign(value, addSpace) {
@@ -161,23 +167,25 @@
         const characters = ["Витя", "Толя", "Катя", "Женя", "Вова"]
         const value = choseRandomly(characters);
         document.getElementById('randomCharacter').innerText = value;
-        if (miro.board) {
-            miro.showNotification(value);
-        }
+        showNotification(value);
     }
 
     function rollRandomBodyPart() {
         const parts = ["Правая нога", "Левая нога", "Правая рука", "Левая ркуа", "Тело", "Голова"]
         const value = choseRandomly(parts);
         document.getElementById('randomBodyPart').innerText = value;
-        if (miro.board) {
-            miro.showNotification(value);
-        }
+        showNotification(value);
     }
 
     function choseRandomly(elements) {
         result = getRandomInt(0, elements.length);
         return elements[result];
+    }
+
+    function showNotification(test) {
+        if (miro.board) {
+            miro.showNotification(value);
+        }
     }
 
     async function postToDiscord(text, name) {
