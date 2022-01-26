@@ -3,7 +3,8 @@
 <script>
     var bottomPanelOpened = false;
     miro.onReady(() => {
-        console.log("Initializing index.html " + "20");
+        const version = 25;
+        console.log(`--== Dice roller initializer version ${version} ==--`);
         miro.initialize({
             extensionPoints: {
                 bottomBar: {
