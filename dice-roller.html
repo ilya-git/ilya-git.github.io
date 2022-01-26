@@ -18,7 +18,7 @@
         document.getElementById('name').value = userName;
     });
 
-    var showRollNotification = true;
+    var showRollNotification = false;
 
     document.onkeypress = (e) => {
         if (e.key == 'Enter') roll();
@@ -46,7 +46,8 @@
         const discordText = '```\n' + text + '\n```';
 
         if (showRollNotification) {
-            const miroText = name + ' кидает кубик...\n' + text;
+            const text = `Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
+            const miroText = name + ' кидает кубик... ' + text;
             showNotification(miroText);
         }
         await postToDiscord(discordText, name);
