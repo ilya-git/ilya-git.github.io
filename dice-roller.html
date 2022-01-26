@@ -37,14 +37,15 @@
         const roll = getRandomInt(1, 11);
         const result = target - roll;
 
-        const title = `Кидает кубик...`;
         const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-        const textResult = '```' + title + '\n' + text + '```';
+        const discordText = '```Кидает кубик...' + '\n' + text + '```';
+
         if (showRollNotification) {
+            const miroText = name + 'кидает кубик...';
             showNotification(textResult);
         }
-        await postToDiscord(textResult, name);
+        await postToDiscord(discordText, name);
     }
 
     function getIntWithSign(value, addSpace) {
