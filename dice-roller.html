@@ -8,33 +8,48 @@
 
 
 
-    <div class="row p-1" >
-        <div class="col-5 p-1">
-            <label for="name">Имя персонажа:</label>
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-3 p-1">
+                <input type="number" id="stat" placeholder="Стат" class="form-control" required min="-10" max="10"
+                    value=5>
+            </div>
+            <div class="col-3 p-1">
+                <input type="number" id="diff" placeholder="Сложность" class="form-control" required min="-10" max="10"
+                    value=0>
+            </div>
+            <div class="col-3 p-1">
+                <input type="number" id="bonus" placeholder="Бонус" class="form-control" required min="-10" max="10"
+                    value=0>
+            </div>
+            <div class="col-3 p-1 text-center">
+                <button type="submit" class="btn btn-primary">🎲</button>
+            </div>
         </div>
-        <div class="col-3 p-1">
-            <input id="name" name="name" value="Рольф Рольфсон">
-        </div>            
-    </div>
-    <div class="row px-2">
-        <div class="col-3 p-1">
-            <input type="number" id="stat" placeholder="Стат" class="form-control" required min="-10" max="10" value=5>
-        </div>
-        <div class="col-3 p-1">
-            <input type="number" id="diff" placeholder="Сложность" class="form-control" required min="-10" max="10"
-                value=0>
-        </div>
-        <div class="col-3 p-1">
-            <input type="number" id="bonus" placeholder="Бонус" class="form-control" required min="-10" max="10"
-                value=0>
-        </div>
-        <div class="col-3 p-1">
-            <button type="submit" class="btn btn-primary">+</button>
-          </div>  
     </div>
 
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
 
-<!-- 
+    <div class="p-2">
+        <label for="name">Имя персонажа:</label>
+        <input id="name" name="name" value="Рольф Рольфсон">
+    </div>
+    <div class="p-2">
+        <button onclick="rollRandomCharacter()">Случайный персонаж</button>
+        <div id="randomCharacter"></div>
+    </div>
+    <div class="p-2">
+        <button onclick="rollRandomBodyPart()">Случайная часть тела</button>
+        <div id="randomBodyPart"></div>
+    </div>
+
+    <!-- 
 <div class="form-inline">
     <input type="number" name="stat" placeholder="Стат" class="form-control" required min="1" max="10" value=5>
     <input type="number" name="diff" placeholder="Сложность" class="form-control" required min="-10" max="10">
@@ -83,6 +98,7 @@
 </br>
 <button onclick="rollRandomBodyPart()">Случайная часть тела</button>
 <div id="randomBodyPart"></div> -->
+</body>
 <script>
 
     console.log("--== Dice roller plugin version 22 ==--");
@@ -145,12 +161,18 @@
         const characters = ["Витя", "Толя", "Катя", "Женя", "Вова"]
         const value = choseRandomly(characters);
         document.getElementById('randomCharacter').innerText = value;
+        if (miro.board) {
+            miro.showNotification(value);
+        }
     }
 
     function rollRandomBodyPart() {
         const parts = ["Правая нога", "Левая нога", "Правая рука", "Левая ркуа", "Тело", "Голова"]
         const value = choseRandomly(parts);
         document.getElementById('randomBodyPart').innerText = value;
+        if (miro.board) {
+            miro.showNotification(value);
+        }
     }
 
     function choseRandomly(elements) {
