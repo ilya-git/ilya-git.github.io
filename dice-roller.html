@@ -5,100 +5,6 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <script src="https://miro.com/app/static/sdk.1.1.js"></script>
-
-
-
-<body>
-    <div class="container">
-
-        <div class="row">
-            <div class="col-3 p-1">
-                <input type="number" id="stat" placeholder="Стат" class="form-control" required min="-10" max="10"
-                    value=5>
-            </div>
-            <div class="col-3 p-1">
-                <input type="number" id="diff" placeholder="Сложность" class="form-control" required min="-10" max="10"
-                    value=0>
-            </div>
-            <div class="col-3 p-1">
-                <input type="number" id="bonus" placeholder="Бонус" class="form-control" required min="-10" max="10"
-                    value=0>
-            </div>
-            <div class="col-3 p-1 text-center">
-                <button type="submit" class="btn btn-primary" onclick="roll()">🎲</button>
-            </div>
-        </div>
-    </div>
-
-    </br>
-    </br>
-    </br>
-    </br>
-    </br>
-
-    <div class="p-2">
-        <label for="name">Имя персонажа:</label>
-        <input id="name" name="name" value="Рольф Рольфсон">
-    </div>
-    <div class="p-2">
-        <button onclick="rollRandomCharacter()">Случайный персонаж</button>
-        <div id="randomCharacter"></div>
-    </div>
-    <div class="p-2">
-        <button onclick="rollRandomBodyPart()">Случайная часть тела</button>
-        <div id="randomBodyPart"></div>
-    </div>
-
-    <!-- 
-<div class="form-inline">
-    <input type="number" name="stat" placeholder="Стат" class="form-control" required min="1" max="10" value=5>
-    <input type="number" name="diff" placeholder="Сложность" class="form-control" required min="-10" max="10">
-    <input type="number" name="bonus" placeholder="Бонус" class="form-control"required min="-10" max="10">
-    <button type="submit" class="btn btn-primary">
-        <i class="fa fa-btn fa-plus"></i>
-    </button>
-</div>
-
-<table>
-    <tr>
-        <th>
-            <label for="stat">Стат:</label>
-        </th>
-        <th>
-            <label for="stat">Сложность:</label>
-        </th>
-        <th>
-            <label for="bonus">Бонус:</label>
-        </th>
-    </tr>
-    <tr>
-        <td>
-            <input type="number" id="stat" name="stat" value="5" min="1" max="10">
-            +
-        </td>
-        <td>
-            <input type="number" id="diff" name="diff" min="-10" value="0" max="10">
-            +
-        </td>
-        <td>
-            <input type="number" id="bonus" name="bonus" value="0" min="-10" max="10">
-        </td>
-        <td>
-            <button onclick="roll()">Кинуть кубик</button>
-        </td>
-    </tr>
-</table>
-</br>
-</br>
-</br>
-<button onclick="rollRandomCharacter()">Случайный персонаж</button>
-<div id="randomCharacter"></div>
-</br>
-</br>
-</br>
-<button onclick="rollRandomBodyPart()">Случайная часть тела</button>
-<div id="randomBodyPart"></div> -->
-</body>
 <script>
 
     console.log("--== Dice roller plugin version 22 ==--");
@@ -134,11 +40,11 @@
         const title = `Кидает кубик...`;
         const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-        const result = '```' + title + '\n' + text + '```';
-        if (showRollNotification){
-            showNotification(result);
+        const textResult = '```' + title + '\n' + text + '```';
+        if (showRollNotification) {
+            showNotification(textResult);
         }
-        await postToDiscord(result, name);
+        await postToDiscord(textResult, name);
     }
 
     function getIntWithSign(value, addSpace) {
@@ -220,5 +126,48 @@
     }
 
 </script>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-3 p-1">
+                <input type="number" id="stat" placeholder="Стат" class="form-control" required min="-10" max="10"
+                    value=5>
+            </div>
+            <div class="col-3 p-1">
+                <input type="number" id="diff" placeholder="Сложность" class="form-control" required min="-10" max="10"
+                    value=0>
+            </div>
+            <div class="col-3 p-1">
+                <input type="number" id="bonus" placeholder="Бонус" class="form-control" required min="-10" max="10"
+                    value=0>
+            </div>
+            <div class="col-3 p-1 text-center">
+                <button type="submit" class="btn btn-primary" onclick="roll()">🎲</button>
+            </div>
+        </div>
+    </div>
+
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+
+    <div class="p-2">
+        <label for="name">Имя персонажа:</label>
+        <input id="name" name="name" value="Рольф Рольфсон">
+    </div>
+    <div class="p-2">
+        <button onclick="rollRandomCharacter()">Случайный персонаж</button>
+        <div id="randomCharacter"></div>
+    </div>
+    <div class="p-2">
+        <button onclick="rollRandomBodyPart()">Случайная часть тела</button>
+        <div id="randomBodyPart"></div>
+    </div>
+
+</body>
 
 </html>
