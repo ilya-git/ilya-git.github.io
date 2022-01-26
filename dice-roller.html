@@ -7,7 +7,7 @@
 <script src="https://miro.com/app/static/sdk.1.1.js"></script>
 <script>
 
-    const version = 25;
+    const version = 26;
 
     console.log(`--== Dice roller plugin version ${version} ==--`);
 
@@ -39,9 +39,11 @@
         const roll = getRandomInt(1, 11);
         const result = target - roll;
 
-        const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
+        //const text = `Цель: ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)}). Бросок: ${roll}. Результат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
+        const text = `Цель:       ${target} (${stat} ${getIntWithSign(difficulty, true)} ${getIntWithSign(bonus, true)})\nБросок:     ${roll}\nРезультат: ${getIntWithSign(result)}  ${getResultSmile(result)}`
 
-        const discordText = '```Кидает кубик...\n' + text + '```';
+        const discordTitle = `Кидает кубик...\n`;
+        const discordText = '```\n' + text + '\n```';
 
         if (showRollNotification) {
             const miroText = name + ' кидает кубик...\n' + text;
