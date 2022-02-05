@@ -19,6 +19,7 @@
     });
 
     var showRollNotification = true;
+    var postToDiscord = true;
 
     document.onkeypress = (e) => {
         if (e.key == 'Enter') roll();
@@ -27,6 +28,7 @@
         if (e.key == 'b') rollRandomBodyPart();
         if (e.key == 'p') rollRandomBodyPart();
         if (e.key == 'n') showRollNotification = !showRollNotification;
+        if (e.key == 'd') postToDiscord = !postToDiscord;
     }
 
     async function roll() {
@@ -50,7 +52,10 @@
             const miroText = name + ' кидает кубик... ' + text;
             showNotification(miroText);
         }
-        await postToDiscord(discordText, name);
+
+        if (postToDiscord) {
+            await postToDiscord(discordText, name);
+        }        
     }
 
     function getIntWithSign(value, addSpace) {
