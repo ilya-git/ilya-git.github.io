@@ -19,7 +19,7 @@
     });
 
     var showRollNotification = true;
-    var postToDiscord = true;
+    var shouldPostToDiscord = true;
 
     document.onkeypress = (e) => {
         if (e.key == 'Enter') roll();
@@ -28,7 +28,7 @@
         if (e.key == 'b') rollRandomBodyPart();
         if (e.key == 'p') rollRandomBodyPart();
         if (e.key == 'n') showRollNotification = !showRollNotification;
-        if (e.key == 'd') postToDiscord = !postToDiscord;
+        if (e.key == 'd') shouldPostToDiscord = !shouldPostToDiscord;
     }
 
     async function roll() {
@@ -53,7 +53,7 @@
             showNotification(miroText);
         }
 
-        if (postToDiscord) {
+        if (shouldPostToDiscord) {
             await postToDiscord(discordText, name);
         }        
     }
